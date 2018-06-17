@@ -44,7 +44,7 @@ class Warp extends PluginBase implements Listener{
 	}
 	public function onTouch(PlayerInteractEvent $ev){
 		$player=$ev->getPlayer();
-		if(in_array($player,$this->making){
+		if(in_array($player,$this->making)){
 			/* $block=$ev->getBlock();
 			$pos=Position::fromObject($block,$block->getLevel()).add(0,1,0); */
 			$pos=Position::fromObject($ev->getTouchVector(),$player->getLevel()).add(0,1,0);
@@ -56,7 +56,7 @@ class Warp extends PluginBase implements Listener{
 	}
 	public function onBreak(PlayerBreakEvent $ev){
 		$player=$ev->getPlayer();
-		if(in_array($player,$this->making){
+		if(in_array($player,$this->making)){
 			$block=$ev->getBlock();
 			$pos=Position::fromObject($block,$block->getLevel()).add(0,1,0);
 			$this->addPortal($this->making[$player],$pos);
