@@ -1,0 +1,10 @@
+name: Warp
+main: athena\sabone\Warp
+author: SaBone(imaheejae@gmail.com)
+api: [3.0.0-ALPHA11,3.0.0,3.0.0-ALPHA12,3.0.0-ALPHA13]
+version: 1.0.0 
+
+commands:
+ 워프:
+  description: 워프 명령어
+  aliases: ["warp"]
