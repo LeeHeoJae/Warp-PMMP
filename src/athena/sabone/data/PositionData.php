@@ -59,7 +59,7 @@ class PositionData extends Position implements \JsonSerializable{
 	 * @return string for used as the key of array
 	 */
 	public function hashKey() : string{
-		return "{$this->getFloorX()}/{$this->getFloorY()}/{$this->getFloorZ()}/{$this->level->getFolderName()}";
+		return self::toHashKey($this);
 	}
 
 	/**
@@ -71,5 +71,14 @@ class PositionData extends Position implements \JsonSerializable{
 	 */
 	public static function fromHashKey(string $hashKey) : PositionData{
 		return self::jsonDeserialize(explode("/", $hashKey));
+	}
+
+	/**
+	 * @param Position $pos
+	 *
+	 * @return string for used as the key of array
+	 */
+	public static function toHashKey(Position $pos) : string{
+		return "{$pos->getFloorX()}/{$pos->getFloorY()}/{$pos->getFloorZ()}/{$pos->level->getFolderName()}";
 	}
 }
