@@ -16,6 +16,7 @@ use pocketmine\utils\Config;
 
 class Warp extends PluginBase implements Listener{
 	public $g = [];
+	/** @var Config */
 	public $config;
 	public $portals = [];
 	public $making = [];
@@ -242,7 +243,7 @@ class Warp extends PluginBase implements Listener{
 		return $pos;
 	}
 
-	function warp($player, $name){
+	function warp(Player $player, $name){
 		if($name instanceof Position){
 			$name = $this->getWarpName($name);
 		}
