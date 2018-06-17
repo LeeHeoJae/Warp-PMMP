@@ -151,7 +151,7 @@ class Warp extends PluginBase implements Listener{
 				//워프 목록
 				$n = "";
 				foreach($this->commands as $q){
-					$n += $q . ", ";
+					$n .= $q . ", ";
 				}
 				$sender->sendMessage("§e{$u}워프의 개수 : {count($g)}\n {$n}");
 				return true;
