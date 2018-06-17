@@ -6,5 +6,6 @@ version: 1.0.0
 
 commands:
  워프:
+  usage: /워프 <추가 | 삭제 | 금지 | 목록>
   description: 워프 명령어
   aliases: ["warp"]

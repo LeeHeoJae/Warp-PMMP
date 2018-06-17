@@ -88,52 +88,60 @@ class Warp extends PluginBase implements Listener{
 	}
 
 	public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
-		if(!($sender instanceof Player)){
-			return false;
-		}
 		if($label === "워프" || $label === "warp"){
-			if(count($args) < 2){
+			if(count($args) < 1){
 				return false;
-			}
-			if($args[0] === "추가" || $args[0] === "a"){
-				if(isset($this->making[$playerName = $sender->getLowerCaseName()])){
-					$sender->sendMessage("§e{$this->prefix}이미 만드는중입니다.");
-					return false;
-				}
-				if(DestinationData::getInstance($args[1]) instanceof DestinationData){
-					$sender->sendMessage("§e{$this->prefix}워프의 목적지 아래 블럭을 터치하여 목적지를 생성해주세요.");
-				}else{
-					$sender->sendMessage("§e{$this->prefix}포탈을 설치할곳의 아래 블럭을 부서주세요.");
-				}
-				$this->making[$playerName] = $args[1];
-				return true;
-			}
-			if($args[0] === "삭제" || $args[0] === "d"){
-				if(DestinationData::getInstance($args[1]) instanceof DestinationData){
-					DestinationData::removeInstance($args[1]);
-					$sender->sendMessage("§e{$this->prefix}워프를 삭제했습니다.");
-				}else{
-					$sender->sendTip("§e{$this->prefix}존재하지 않는 워프입니다.");
-				}
-				return true;
-			}
-			if($args[0] === "금지" || $args[0] === "b"){
-				$destinationData = DestinationData::getInstance($args[1]);
-				if($destinationData instanceof DestinationData){
-					$destinationData->setBanned(!$destinationData->isBanned());
-					if($destinationData->isBanned()){
-						$sender->sendMessage("§e{$this->prefix}워프를 금지했습니다.");
-					}else{
-						$sender->sendMessage("§e{$this->prefix}워프의 금지를 풀었습니다.");
-					}
-				}else{
-					$sender->sendTip("§e{$this->prefix}존재하지 않는 워프입니다.");
-				}
-				return true;
 			}
 			if($args[0] === "목록" || $args[0] === "l"){
 				$destinationDatas = DestinationData::getInstances();
 				$sender->sendMessage("§e{$this->prefix}워프의 개수 : " . count($destinationDatas) . "\n " . implode(", ", array_keys($destinationDatas)));
+				return true;
+			}elseif($args[0] === "금지" || $args[0] === "b"){
+				if(count($args) < 2){
+					$sender->sendMessage("§e{$this->prefix}/워프 추가 <name>");
+				}else{
+					$destinationData = DestinationData::getInstance($args[1]);
+					if($destinationData instanceof DestinationData){
+						$destinationData->setBanned(!$destinationData->isBanned());
+						if($destinationData->isBanned()){
+							$sender->sendMessage("§e{$this->prefix}워프를 금지했습니다.");
+						}else{
+							$sender->sendMessage("§e{$this->prefix}워프의 금지를 풀었습니다.");
+						}
+					}else{
+						$sender->sendMessage("§e{$this->prefix}존재하지 않는 워프입니다.");
+					}
+				}
+				return true;
+			}elseif(!($sender instanceof Player)){
+				$sender->sendMessage("§e{$this->prefix}게임 내에서만 사용 가능합니다");
+				return true;
+			}else{
+				if($args[0] === "추가" || $args[0] === "a"){
+					if(count($args) < 2){
+						$sender->sendTip("§e{$this->prefix}/워프 추가 <name>");
+					}elseif(isset($this->making[$playerName = $sender->getLowerCaseName()])){
+						$sender->sendMessage("§e{$this->prefix}이미 만드는중입니다.");
+					}else{
+						if(DestinationData::getInstance($args[1]) instanceof DestinationData){
+							$sender->sendMessage("§e{$this->prefix}워프의 목적지 아래 블럭을 터치하여 목적지를 생성해주세요.");
+						}else{
+							$sender->sendMessage("§e{$this->prefix}포탈을 설치할곳의 아래 블럭을 부서주세요.");
+						}
+					}
+					$this->making[$playerName] = $args[1];
+				}elseif($args[0] === "삭제" || $args[0] === "d"){
+					if(count($args) < 2){
+						$sender->sendMessage("§e{$this->prefix}/워프 추가 <name>");
+					}elseif(DestinationData::getInstance($args[1]) instanceof DestinationData){
+						DestinationData::removeInstance($args[1]);
+						$sender->sendMessage("§e{$this->prefix}워프를 삭제했습니다.");
+					}else{
+						$sender->sendTip("§e{$this->prefix}존재하지 않는 워프입니다.");
+					}
+				}else{
+					return false;
+				}
 				return true;
 			}
 		}
