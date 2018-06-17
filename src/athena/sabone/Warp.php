@@ -194,7 +194,7 @@ class Warp extends PluginBase implements Listener{
 		if($name instanceof Position){
 			$name = $this->getWarpName($name);
 		}
-		array_splice($this->g[strtolower($name)]["portals"], array_search($this->floor($portal), $g[strtolower($name)]["portals"]), 1);
+		array_splice($this->g[strtolower($name)]["portals"], array_search($this->floor($portal), $this->g[strtolower($name)]["portals"]), 1);
 	}
 
 	public function setDes($name, Position $pos){
