@@ -43,7 +43,8 @@ class Warp extends PluginBase implements Listener{
 	}
 
 	public function onDisable(){
-		$this->save();
+		$this->config->setAll($this->g);
+		$this->config->save();
 	}
 
 	public function onTouch(PlayerInteractEvent $ev){
@@ -251,10 +252,5 @@ class Warp extends PluginBase implements Listener{
 		$player->teleport($des);
 		$player->sendTip("§6워프 !");
 		//돈 줄이기
-	}
-
-	function save(){
-		$this->config->setAll($this->g);
-		$this->config->save();
 	}
 }
