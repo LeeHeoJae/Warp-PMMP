@@ -125,7 +125,7 @@ class Warp extends PluginBase implements Listener{
 				}
 				$this->delWarp($args[1]);
 				$sender->sendMessage("§e{$u}워프를 삭제했습니다.");
-				$this->getServer()->getCommandMap()->runregister(new Command($args[1]));
+				$this->getServer()->getCommandMap()->unregister(new Command($args[1]));
 				return true;
 			}
 			if($args[0] === "금지" || $args[0] === "b"){
