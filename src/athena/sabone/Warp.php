@@ -62,6 +62,7 @@ class Warp extends PluginBase implements Listener{
 				new DestinationData($this->making[$playerName], PositionData::fromPosition($pos), false);
 				$player->sendMessage("§e{$this->prefix}{$this->making[$playerName]} 워프가 생성되었습니다!");
 			}
+			$ev->setCancelled();
 			unset($this->making[$playerName]);
 		}
 	}
@@ -82,6 +83,7 @@ class Warp extends PluginBase implements Listener{
 					$player->sendMessage("§e{$this->prefix}블럭을 터치하여 워프의 목적지를 먼저 설정해주세요");
 				}
 			}
+			$ev->setCancelled();
 		}
 	}
 
@@ -147,6 +149,7 @@ class Warp extends PluginBase implements Listener{
 				$player->teleport($destinationData->getDestination());
 				$player->sendTip("§6워프 !");
 				//돈 줄이기
+				$ev->setCancelled();
 			}
 		}
 		return;
