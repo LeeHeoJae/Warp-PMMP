@@ -32,7 +32,7 @@ class Warp extends PluginBase implements Listener{
 	*/
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
-		$this->config = new Config($this->getDataFolder() . "\config.json", Config::JSON);
+		$this->config = new Config($this->getDataFolder() . "config.json", Config::JSON);
 		$this->g = $this->config->getAll();
 		$this->commands = array_keys($this->g);
 		foreach($this->commands as $m){
