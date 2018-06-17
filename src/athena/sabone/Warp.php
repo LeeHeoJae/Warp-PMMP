@@ -128,8 +128,8 @@ class Warp extends PluginBase implements Listener{
 						}else{
 							$sender->sendMessage("§e{$this->prefix}워프의 목적지 아래 블럭을 터치하여 목적지를 생성해주세요.");
 						}
+						$this->making[$playerName] = $args[1];
 					}
-					$this->making[$playerName] = $args[1];
 				}elseif($args[0] === "삭제" || $args[0] === "d"){
 					if(count($args) < 2){
 						$sender->sendMessage("§e{$this->prefix}/워프 추가 <name>");
