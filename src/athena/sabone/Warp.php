@@ -6,9 +6,8 @@ use pocketmine\command\{
 	Command, CommandSender
 };
 use pocketmine\event\Listener;
-use pocketmine\event\player\{
-	PlayerBreakEvent, PlayerInteractEvent
-};
+use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\level\Position;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
@@ -63,7 +62,7 @@ class Warp extends PluginBase implements Listener{
 		}
 	}
 
-	public function onBreak(PlayerBreakEvent $ev){
+	public function onBreak(BlockBreakEvent $ev){
 		$player = $ev->getPlayer();
 		if(in_array($player, $this->making)){
 			$block = $ev->getBlock();
