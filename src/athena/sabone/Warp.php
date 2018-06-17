@@ -161,7 +161,7 @@ class Warp extends PluginBase implements Listener{
 
 	public function onSnick(PlayerToggleSneakEvent $ev){
 		$player = $ev->getPlayer();
-		$position = $player->getPostition();
+		$position = $player->getPosition();
 		if($this->isWarp($position)){
 			return;
 		}
