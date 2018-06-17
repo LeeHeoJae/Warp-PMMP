@@ -185,7 +185,7 @@ class Warp extends PluginBase implements Listener{
 		}
 		$p = $this->g[strtolower($name)]["portals"];
 		foreach($portals as $a){
-			array_push($p, $this->a($a));
+			array_push($p, $this->floor($a));
 		}
 		$this->g[strtolower($name)]["portals"] = $p;
 	}
@@ -194,14 +194,14 @@ class Warp extends PluginBase implements Listener{
 		if($name instanceof Position){
 			$name = $this->getWarpName($name);
 		}
-		array_splice($g[strtolower($name)]["portals"], array_search($this->a($portal), $g[strtolower($name)]["portals"]), 1);
+		array_splice($g[strtolower($name)]["portals"], array_search($this->floor($portal), $g[strtolower($name)]["portals"]), 1);
 	}
 
 	public function setDes($name, Position $pos){
 		if($name instanceof Position){
 			$name = $this->getWarpName($name);
 		}
-		$this->g[strtolower($name)]["destination"] = $this->a($pos);
+		$this->g[strtolower($name)]["destination"] = $this->floor($pos);
 	}
 
 	public function isBanned($name){
@@ -227,14 +227,14 @@ class Warp extends PluginBase implements Listener{
 
 	public function isWarp($name){
 		if($name instanceof Position){
-			return in_array($this->a($pos), $this->portals);
+			return in_array($this->floor($pos), $this->portals);
 		}
 		return in_array($name, $this->g);
 	}
 
 	public function getWarpName(Position $pos){
 		foreach($this->g as $name => $value){
-			if(in_array($this->a($pos), $value["portals"])){
+			if(in_array($this->floor($pos), $value["portals"])){
 				return $name;
 			}
 		}
@@ -247,7 +247,7 @@ class Warp extends PluginBase implements Listener{
 		return $this->g[$name]["destination"];
 	}
 
-	public function a(Position $pos){//약분?
+	public function floor(Position $pos){
 		$pos->x = (int) $pos->x;
 		$pos->y = (int) $pos->y;
 		$pos->z = (int) $pos->z;
