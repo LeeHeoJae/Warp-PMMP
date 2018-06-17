@@ -5,9 +5,10 @@ namespace athena\sabone;
 use pocketmine\command\{
 	Command, CommandSender
 };
+use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\player\PlayerToggleSneakEvent;
 use pocketmine\level\Position;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
@@ -158,7 +159,7 @@ class Warp extends PluginBase implements Listener{
 		}
 	}
 
-	public function onSnick(PlayerToggleSnickEvent $ev){
+	public function onSnick(PlayerToggleSneakEvent $ev){
 		$player = $ev->getPlayer();
 		$position = $player->getPostition();
 		if($this->isWarp($position)){
