@@ -58,7 +58,7 @@ class Warp extends PluginBase implements Listener{
 			$pos = Position::fromObject($ev->getTouchVector(), $player->getLevel()) . add(0, 1, 0);
 			$this->addDes($this->making[$player], $pos);
 			unset($this->making[$player]);
-			$player->sendMessage("§e{$u}포탈이 생성되었습니다!");
+			$player->sendMessage("§e{$this->u}포탈이 생성되었습니다!");
 			return;
 		}
 	}
@@ -69,7 +69,7 @@ class Warp extends PluginBase implements Listener{
 			$block = $ev->getBlock();
 			$pos = Position::fromObject($block, $block->getLevel()) . add(0, 1, 0);
 			$this->addPortal($this->making[$player], $pos);
-			$player->sendMessage("§e{$u}포탈을 더 추가하려면 더 부수고 그만 만드려면 도착지 아래 블럭을 터치해주세요.");
+			$player->sendMessage("§e{$this->u}포탈을 더 추가하려면 더 부수고 그만 만드려면 도착지 아래 블럭을 터치해주세요.");
 			return;
 		}
 	}
@@ -92,23 +92,23 @@ class Warp extends PluginBase implements Listener{
 			if($args[0] === "추가" || $args[0] === "a"){
 				//워프 추가 $name $amount
 				if(count($args) < 3){
-					$sender->sendTip("§e{$u}/워프 추가 $name $amount");
+					$sender->sendTip("§e{$this->u}/워프 추가 $name $amount");
 					return false;
 				}
 				if(in_array($sender, $this->making)){
-					$sender->sendMessage("§e{$u}이미 만드는중입니다.");
+					$sender->sendMessage("§e{$this->u}이미 만드는중입니다.");
 					return false;
 				}
 				if(!is_numeric($args[2])){
-					$sender->sendTip("§e{$u}포탈수를 숫자로 입력해주세요.");
+					$sender->sendTip("§e{$this->u}포탈수를 숫자로 입력해주세요.");
 					return false;
 				}
 				if($this->isWarp($args[1])){
-					$sender->sendTip("§e{$u}이미 존재하는 워프입니다.");
+					$sender->sendTip("§e{$this->u}이미 존재하는 워프입니다.");
 					return false;
 				}
 				array_push($this->making, [$sender => $args[1]]);
-				$sender->sendMessage("§e{$u}포탈을 설치할곳의 아래 블럭을 부서주세요.");
+				$sender->sendMessage("§e{$this->u}포탈을 설치할곳의 아래 블럭을 부서주세요.");
 				$this->getServer()->getCommandMap()->register($args[1], new Command($args[1]));
 				$this->addWarp($args[1]);
 				return true;
@@ -116,35 +116,35 @@ class Warp extends PluginBase implements Listener{
 			if($args[0] === "삭제" || $args[0] === "d"){
 				//워프 삭제 $name
 				if(count($args) < 2){
-					$sender->sendTip("§e{$u}/워프 삭제 $name");
+					$sender->sendTip("§e{$this->u}/워프 삭제 $name");
 					return false;
 				}
 				if(!$this->isWarp($args[1])){
-					$sender->sendTip("§e{$u}존재하지 않는 워프입니다.");
+					$sender->sendTip("§e{$this->u}존재하지 않는 워프입니다.");
 					return false;
 				}
 				$this->delWarp($args[1]);
-				$sender->sendMessage("§e{$u}워프를 삭제했습니다.");
+				$sender->sendMessage("§e{$this->u}워프를 삭제했습니다.");
 				$this->getServer()->getCommandMap()->unregister(new Command($args[1]));
 				return true;
 			}
 			if($args[0] === "금지" || $args[0] === "b"){
 				//워프 금지 $name
 				if(count($args) < 2){
-					$sender->sendMessage("§e{$u}/워프 금지 $name");
+					$sender->sendMessage("§e{$this->u}/워프 금지 $name");
 					return false;
 				}
 				if(!$this->isWarp($args[1])){
-					$sender->sendMessage("§e{$u}존재하지 않는 워프입니다.");
+					$sender->sendMessage("§e{$this->u}존재하지 않는 워프입니다.");
 					return false;
 				}
 				if($this->isBanned($args[1])){
 					$this->setBanned($args[1], false);
-					$sender->sendMessage("§e{$u}워프의 금지를 풀었습니다.");
+					$sender->sendMessage("§e{$this->u}워프의 금지를 풀었습니다.");
 					return true;
 				}
 				$this->setBanned($args[1], true);
-				$sender->sendMessage("§e{$u}워프를 금지했습니다.");
+				$sender->sendMessage("§e{$this->u}워프를 금지했습니다.");
 				return true;
 			}
 			if($args[0] === "목록" || $args[0] === "l"){
@@ -153,7 +153,7 @@ class Warp extends PluginBase implements Listener{
 				foreach($this->commands as $q){
 					$n .= $q . ", ";
 				}
-				$sender->sendMessage("§e{$u}워프의 개수 : {count($g)}\n {$n}");
+				$sender->sendMessage("§e{$this->u}워프의 개수 : {count($this->g)}\n {$n}");
 				return true;
 			}
 		}
@@ -194,7 +194,7 @@ class Warp extends PluginBase implements Listener{
 		if($name instanceof Position){
 			$name = $this->getWarpName($name);
 		}
-		array_splice($g[strtolower($name)]["portals"], array_search($this->floor($portal), $g[strtolower($name)]["portals"]), 1);
+		array_splice($this->g[strtolower($name)]["portals"], array_search($this->floor($portal), $g[strtolower($name)]["portals"]), 1);
 	}
 
 	public function setDes($name, Position $pos){
