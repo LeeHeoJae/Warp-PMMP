@@ -130,7 +130,7 @@ class Warp extends PluginBase implements Listener{
 			}
 			if($args[0] === "금지" || $args[0] === "b"){
 				//워프 금지 $name
-				if(count($args < 2)){
+				if(count($args) < 2){
 					$sender->sendMessage("§e{$u}/워프 금지 $name");
 					return false;
 				}
