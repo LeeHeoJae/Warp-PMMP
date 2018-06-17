@@ -52,12 +52,12 @@ class Warp extends PluginBase implements Listener{
 
 	public function onTouch(PlayerInteractEvent $ev){
 		$player = $ev->getPlayer();
-		if(in_array($player, $this->making)){
+		if(isset($this->making[$playerName = $player->getLowerCaseName()])){
 			/* $block=$ev->getBlock();
 			$pos=Position::fromObject($block,$block->getLevel()).add(0,1,0); */
 			$pos = Position::fromObject($ev->getTouchVector(), $player->getLevel()) . add(0, 1, 0);
-			$this->addDes($this->making[$player], $pos);
-			unset($this->making[$player]);
+			$this->addDes($this->making[$playerName], $pos);
+			unset($this->making[$playerName]);
 			$player->sendMessage("§e{$this->prefix}포탈이 생성되었습니다!");
 			return;
 		}
@@ -65,10 +65,10 @@ class Warp extends PluginBase implements Listener{
 
 	public function onBreak(BlockBreakEvent $ev){
 		$player = $ev->getPlayer();
-		if(in_array($player, $this->making)){
+		if(isset($this->making[$playerName = $player->getLowerCaseName()])){
 			$block = $ev->getBlock();
 			$pos = Position::fromObject($block, $block->getLevel()) . add(0, 1, 0);
-			$this->addPortal($this->making[$player], $pos);
+			$this->addPortal($this->making[$playerName], $pos);
 			$player->sendMessage("§e{$this->prefix}포탈을 더 추가하려면 더 부수고 그만 만드려면 도착지 아래 블럭을 터치해주세요.");
 			return;
 		}
@@ -95,7 +95,7 @@ class Warp extends PluginBase implements Listener{
 					$sender->sendTip("§e{$this->prefix}/워프 추가 $name $amount");
 					return false;
 				}
-				if(in_array($sender, $this->making)){
+				if(isset($this->making[$playerName = $sender->getLowerCaseName()])){
 					$sender->sendMessage("§e{$this->prefix}이미 만드는중입니다.");
 					return false;
 				}
@@ -107,7 +107,7 @@ class Warp extends PluginBase implements Listener{
 					$sender->sendTip("§e{$this->prefix}이미 존재하는 워프입니다.");
 					return false;
 				}
-				array_push($this->making, [$sender => $args[1]]);
+				$this->making[$playerName] = $args[1];
 				$sender->sendMessage("§e{$this->prefix}포탈을 설치할곳의 아래 블럭을 부서주세요.");
 				$this->getServer()->getCommandMap()->register($args[1], new Command($args[1]));
 				$this->addWarp($args[1]);
