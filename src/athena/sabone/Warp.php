@@ -227,7 +227,7 @@ class Warp extends PluginBase implements Listener{
 
 	public function isWarp($name){
 		if($name instanceof Position){
-			return in_array($this->floor($pos), $this->portals);
+			return in_array($this->floor($name), $this->portals);
 		}
 		return in_array($name, $this->g);
 	}
