@@ -124,9 +124,9 @@ class Warp extends PluginBase implements Listener{
 						$sender->sendMessage("§e{$this->prefix}이미 만드는중입니다.");
 					}else{
 						if(DestinationData::getInstance($args[1]) instanceof DestinationData){
-							$sender->sendMessage("§e{$this->prefix}워프의 목적지 아래 블럭을 터치하여 목적지를 생성해주세요.");
-						}else{
 							$sender->sendMessage("§e{$this->prefix}포탈을 설치할곳의 아래 블럭을 부서주세요.");
+						}else{
+							$sender->sendMessage("§e{$this->prefix}워프의 목적지 아래 블럭을 터치하여 목적지를 생성해주세요.");
 						}
 					}
 					$this->making[$playerName] = $args[1];
