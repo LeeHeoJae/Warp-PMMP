@@ -53,7 +53,7 @@ class Warp extends PluginBase implements Listener{
 	public function onTouch(PlayerInteractEvent $ev){
 		$player = $ev->getPlayer();
 		if(isset($this->making[$playerName = $player->getLowerCaseName()])){
-			$pos = Position::fromObject($ev->getBlock()->add(0, 1, 0), $player->getLevel());
+			$pos = Position::fromObject($ev->getBlock(), $player->getLevel());
 			$destinationData = DestinationData::getInstance($this->making[$playerName]);
 			if($destinationData instanceof DestinationData){
 				$destinationData->setDestination(PositionData::fromPosition($pos));
@@ -70,7 +70,7 @@ class Warp extends PluginBase implements Listener{
 	public function onBreak(BlockBreakEvent $ev){
 		$player = $ev->getPlayer();
 		if(isset($this->making[$playerName = $player->getLowerCaseName()])){
-			$pos = Position::fromObject($ev->getBlock()->add(0, 1, 0), $player->getLevel());
+			$pos = Position::fromObject($ev->getBlock(), $player->getLevel());
 			if(PortalData::getInstance(PositionData::toHashKey($pos)) instanceof PortalData){
 				unset($this->making[$playerName]);
 				$player->sendMessage("§e{$this->prefix}포탈 추가를 중지합니다");
@@ -150,11 +150,12 @@ class Warp extends PluginBase implements Listener{
 
 	public function onSnick(PlayerToggleSneakEvent $ev){
 		$player = $ev->getPlayer();
-		$portalData = PortalData::getInstance(PositionData::toHashKey($player));
+		$portalData = PortalData::getInstance(PositionData::toHashKey(Position::fromObject($player->subtract(0, 1, 0), $player->getLevel())));
 		if($portalData instanceof PortalData){
 			$destinationData = $portalData->getDestination();
 			if(!$destinationData->isBanned()){
-				$player->teleport($destinationData->getDestination());
+				$destination = $destinationData->getDestination();
+				$player->teleport(Position::fromObject($destination->add(0.5, 1.3, 0.5), $destination->getLevel()));
 				$player->sendTip("§6워프 !");
 				//돈 줄이기
 				$ev->setCancelled();
