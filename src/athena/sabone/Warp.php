@@ -99,7 +99,7 @@ class Warp extends PluginBase implements Listener{
 					$sender->sendMessage("§e{$u}이미 만드는중입니다.");
 					return false;
 				}
-				if(!is_numberic($args[2])){
+				if(!is_numeric($args[2])){
 					$sender->sendTip("§e{$u}포탈수를 숫자로 입력해주세요.");
 					return false;
 				}
