@@ -208,7 +208,7 @@ class Warp extends PluginBase implements Listener{
 		if($name instanceof Position){
 			$name = $this->getWarpName($name);
 		}
-		return $$this->g[strtolower($name)];
+		return $this->g[strtolower($name)];
 	}
 
 	public function setBanned($name, bool $banned = true){
