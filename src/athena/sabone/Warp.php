@@ -56,7 +56,7 @@ class Warp extends PluginBase implements Listener{
 			/* $block=$ev->getBlock();
 			$pos=Position::fromObject($block,$block->getLevel()).add(0,1,0); */
 			$pos = Position::fromObject($ev->getTouchVector(), $player->getLevel())->add(0, 1, 0);
-			$this->addDes($this->making[$playerName], $pos);
+			$this->addPortal($this->making[$playerName], [$pos]);
 			unset($this->making[$playerName]);
 			$player->sendMessage("§e{$this->prefix}포탈이 생성되었습니다!");
 			return;
@@ -68,7 +68,7 @@ class Warp extends PluginBase implements Listener{
 		if(isset($this->making[$playerName = $player->getLowerCaseName()])){
 			$block = $ev->getBlock();
 			$pos = Position::fromObject($block, $block->getLevel())->add(0, 1, 0);
-			$this->addPortal($this->making[$playerName], $pos);
+			$this->addPortal($this->making[$playerName], [$pos]);
 			$player->sendMessage("§e{$this->prefix}포탈을 더 추가하려면 더 부수고 그만 만드려면 도착지 아래 블럭을 터치해주세요.");
 			return;
 		}
