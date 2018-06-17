@@ -41,6 +41,7 @@ class Warp extends PluginBase implements Listener{
 			DestinationData::jsonDeserialize($data, $destinationName);
 		}
 
+		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		//포탈에 예쁘게 파티클 꾸미기 ☆☆
 	}
 
