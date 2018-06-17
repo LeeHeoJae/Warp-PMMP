@@ -92,7 +92,7 @@ class Warp extends PluginBase implements Listener{
 			if($args[0] === "추가" || $args[0] === "a"){
 				//워프 추가 $name $amount
 				if(count($args) < 3){
-					$sender->sendTip("§e{$this->prefix}/워프 추가 $name $amount");
+					$sender->sendTip("§e{$this->prefix}/워프 추가 <name> <amount>");
 					return false;
 				}
 				if(isset($this->making[$playerName = $sender->getLowerCaseName()])){
@@ -116,7 +116,7 @@ class Warp extends PluginBase implements Listener{
 			if($args[0] === "삭제" || $args[0] === "d"){
 				//워프 삭제 $name
 				if(count($args) < 2){
-					$sender->sendTip("§e{$this->prefix}/워프 삭제 $name");
+					$sender->sendTip("§e{$this->prefix}/워프 삭제 <name>");
 					return false;
 				}
 				if(!$this->isWarp($args[1])){
@@ -131,7 +131,7 @@ class Warp extends PluginBase implements Listener{
 			if($args[0] === "금지" || $args[0] === "b"){
 				//워프 금지 $name
 				if(count($args) < 2){
-					$sender->sendMessage("§e{$this->prefix}/워프 금지 $name");
+					$sender->sendMessage("§e{$this->prefix}/워프 금지 <name>");
 					return false;
 				}
 				if(!$this->isWarp($args[1])){
