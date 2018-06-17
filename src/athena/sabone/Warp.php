@@ -133,7 +133,7 @@ class Warp extends PluginBase implements Listener{
 			}
 			if($args[0] === "목록" || $args[0] === "l"){
 				$destinationDatas = DestinationData::getInstances();
-				$sender->sendMessage("§e{$this->prefix}워프의 개수 : " . count($destinationDatas) . "}\n " . implode(", ", array_keys($destinationDatas)));
+				$sender->sendMessage("§e{$this->prefix}워프의 개수 : " . count($destinationDatas) . "\n " . implode(", ", array_keys($destinationDatas)));
 				return true;
 			}
 		}
