@@ -157,6 +157,7 @@ class Warp extends PluginBase implements Listener{
 				return true;
 			}
 		}
+		return false;
 	}
 
 	public function onSnick(PlayerToggleSneakEvent $ev){
@@ -238,6 +239,7 @@ class Warp extends PluginBase implements Listener{
 				return $name;
 			}
 		}
+		return null;
 	}
 
 	public function getDes($name){
