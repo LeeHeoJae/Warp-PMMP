@@ -17,7 +17,6 @@ use pocketmine\utils\Config;
 class Warp extends PluginBase implements Listener{
 	public $g = [];
 	public $config;
-	public $commands = [];
 	public $portals = [];
 	public $making = [];
 	public $prefix = "[워프] ";
@@ -35,10 +34,6 @@ class Warp extends PluginBase implements Listener{
 		@mkdir($this->getDataFolder());
 		$this->config = new Config($this->getDataFolder() . "config.json", Config::JSON);
 		$this->g = $this->config->getAll();
-		$this->commands = array_keys($this->g);
-		foreach($this->commands as $m){
-			$this->getServer()->getCommandMap()->register($m, new Command($m));
-		}
 		foreach($this->g as $name => $value){
 			array_push($this->portals, $value["portals"]);
 		}
@@ -78,13 +73,6 @@ class Warp extends PluginBase implements Listener{
 		if(!($sender instanceof Player)){
 			return false;
 		}
-		if(in_array(strtolower($label), $this->commands)){
-			if($this->isBanned($label)){
-				return false;
-			}
-			$this->warp($sender, $label);
-			return true;
-		}
 		if($label === "워프" || $label === "warp"){
 			if(count($args) < 2){
 				return false;
@@ -109,7 +97,6 @@ class Warp extends PluginBase implements Listener{
 				}
 				$this->making[$playerName] = $args[1];
 				$sender->sendMessage("§e{$this->prefix}포탈을 설치할곳의 아래 블럭을 부서주세요.");
-				$this->getServer()->getCommandMap()->register($args[1], new Command($args[1]));
 				$this->addWarp($args[1]);
 				return true;
 			}
@@ -125,7 +112,6 @@ class Warp extends PluginBase implements Listener{
 				}
 				$this->delWarp($args[1]);
 				$sender->sendMessage("§e{$this->prefix}워프를 삭제했습니다.");
-				$this->getServer()->getCommandMap()->unregister(new Command($args[1]));
 				return true;
 			}
 			if($args[0] === "금지" || $args[0] === "b"){
@@ -150,8 +136,8 @@ class Warp extends PluginBase implements Listener{
 			if($args[0] === "목록" || $args[0] === "l"){
 				//워프 목록
 				$n = "";
-				foreach($this->commands as $q){
-					$n .= $q . ", ";
+				foreach($this->g as $key => $value){
+					$n .= $key . ", ";
 				}
 				$sender->sendMessage("§e{$this->prefix}워프의 개수 : {count($this->g)}\n {$n}");
 				return true;
