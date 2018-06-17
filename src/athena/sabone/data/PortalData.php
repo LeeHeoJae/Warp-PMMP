@@ -76,27 +76,15 @@ class PortalData extends PositionData{
 	}
 
 	/**
-	 * Specify data which should be serialized to JSON
-	 *
-	 * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
-	 * @return mixed data which can be serialized by <b>json_encode</b>,
-	 * which is a value of any type other than a resource.
-	 * @since 5.4.0
-	 */
-	public function jsonSerialize() : array{
-		return [$this->destination->getName()];
-	}
-
-	/**
 	 * Deserialize in JSON to generate PortalData
 	 *
 	 * @param array  $json mixed data which can be serialized by <b>json_encode</b>,
-	 * @param string $hashKey
+	 * @param DestinationData $destination = null
 	 *
 	 * @return PortalData
 	 */
-	public static function jsonDeserialize(array $json, string $hashKey = "") : PositionData{
-		return self::fromObject(PositionData::fromHashKey($hashKey), DestinationData::getInstance($json[0]));
+	public static function jsonDeserialize(array $json, DestinationData $destination = null) : PositionData{
+		return self::fromPosition(parent::jsonDeserialize($json), $destination);
 	}
 
 	/**

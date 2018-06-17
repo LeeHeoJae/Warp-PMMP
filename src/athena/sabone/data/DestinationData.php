@@ -120,7 +120,7 @@ class DestinationData implements \JsonSerializable{
 		$portals = [];
 		foreach(PortalData::getInstances() as $hashKey => $portalData){
 			if($portalData->getDestination() === $this){
-				$portals[$hashKey] = $portalData;
+				$portals[] = $portalData;
 			}
 		}
 		return [
@@ -139,13 +139,14 @@ class DestinationData implements \JsonSerializable{
 	 * @return DestinationData
 	 */
 	public static function jsonDeserialize(array $json, string $name) : DestinationData{
-		foreach($json["portals"] as $hashKey => $portalJson){
-			PortalData::jsonDeserialize($portalJson, $hashKey);
-		}
-		return new DestinationData(
+		$destinationData = new DestinationData(
 			$name,
 			PositionData::jsonDeserialize($json["destination"]),
 			(bool) $json["banned"]
 		);
+		foreach($json["portals"] as $hashKey => $portalJson){
+			PortalData::jsonDeserialize($portalJson, $destinationData);
+		}
+		return $destinationData;
 	}
 }
